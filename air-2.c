@@ -38,8 +38,8 @@ void ulang()
   printf("\n\n\t--------------------------------------------------------");
   printf("\n\tApakah anda ingin mengulang ?            ");
   printf("\n\t--------------------------------------------------------");
-  printf("\n\t(1) Ya              ");
-  printf("\n\t(2) Tidak           ");
+  printf("\n\t[1] Ya              ");
+  printf("\n\t[2] Tidak           ");
   printf("\n\t--------------------------------------------------------");
   printf("\n\tMasukkan pilihan  : ");
   while (scanf("%d", &menu) == 0 || menu < 1 || menu > 2)
@@ -84,13 +84,82 @@ void open()
   close();
 }
 
+void cetak(char nama[], char alamat[], char golongan[], float bpm, float denda, float biaya_per_kubik, float tagihan)
+{
+  time_t t = time(NULL);
+  struct tm tm = *localtime(&t);
+
+  FILE *fptr;
+
+  fptr = fopen("bukti-pembayaran.txt", "w");
+
+  if (fptr == NULL)
+  {
+    printf("Unable to create file.\n");
+    exit(EXIT_FAILURE);
+  }
+
+  fprintf(fptr, "\n\t===============================================================");
+  fprintf(fptr, "\n\t    Toko Aizen Dewa Satir \n");
+  fprintf(fptr, "\n\t---------------------------------------------------------------");
+  fprintf(fptr, "\n\t                      BUKTI PEMBAYARAN AIR                   ");
+  fprintf(fptr, "\n\t---------------------------------------------------------------\n");
+  fprintf(fptr, "\n\t  Nama                      : %s", nama);
+  fprintf(fptr, "\n\t  Alamat                    : %s", alamat);
+  fprintf(fptr, "\n\t  Tgl Pembayaran            : %d-%02d-%02d %02d:%02d:%02d ", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900, tm.tm_hour, tm.tm_min, tm.tm_sec);
+  fprintf(fptr, "\n\t  Golongan                  : %s", golongan);
+  fprintf(fptr, "\n\t  Biaya Administrasi        : Rp. 2500");
+  fprintf(fptr, "\n\t  Biaya BPM                 : Rp. %2.f", bpm);
+  fprintf(fptr, "\n\t  Biaya Denda               : Rp. %2.f", denda);
+  fprintf(fptr, "\n\t  Biaya Pemakaian Air(m^3)  : Rp. %2.f", biaya_per_kubik);
+  fprintf(fptr, "\n\n\t  Jumlah Tagihan anda  : Rp. %2.f", tagihan);
+  fprintf(fptr, "\n\n\n\t=============================================================");
+
+  fclose(fptr);
+
+  printf("\n\tBukti pembayaran berhasil dicetak!");
+  ulang();
+}
+
+void konfirmasi_cetak(char nama[], char alamat[], char golongan[], float bpm, float denda, float biaya_per_kubik, float tagihan)
+{
+  int menu;
+  printf("\n\n\t--------------------------------------------------------");
+  printf("\n\tApakah anda ingin mencetak bukti pembayaran ?            ");
+  printf("\n\t--------------------------------------------------------");
+  printf("\n\t[1] Ya              ");
+  printf("\n\t[2] Tidak           ");
+  printf("\n\t--------------------------------------------------------");
+  printf("\n\tMasukkan pilihan  : ");
+  while (scanf("%d", &menu) == 0 || menu < 1 || menu > 2)
+  {
+    printf("\t---------------------------------------");
+    printf("\n\tKarakter yang anda masukan salah");
+    printf("\n\t,asukan harus berupa angka");
+    printf("\n\t---------------------------------------");
+    printf("\n\tMasukkan pilihan : ");
+    while (menu = getchar() != '\n')
+      ;
+  }
+
+  switch (menu)
+  {
+  case 1:
+    cetak(nama, alamat, golongan, bpm, denda, biaya_per_kubik, tagihan);
+    break;
+  case 2:
+    ulang();
+    break;
+  }
+}
+
 void format(char nama[], char alamat[], char golongan[], float bpm, float denda, float biaya_per_kubik, float tagihan)
 {
   time_t t = time(NULL);
   struct tm tm = *localtime(&t);
 
   printf("\n\t===============================================================");
-  printf("\n\t    Toko Xin Fu Tang \n");
+  printf("\n\t    Toko Aizen Dewa Satir \n");
   printf("\n\t---------------------------------------------------------------");
   printf("\n\t                      BUKTI PEMBAYARAN AIR                   ");
   printf("\n\t---------------------------------------------------------------\n");
@@ -104,6 +173,8 @@ void format(char nama[], char alamat[], char golongan[], float bpm, float denda,
   printf("\n\t  Biaya Pemakaian Air(m^3)  : Rp. %2.f", biaya_per_kubik);
   printf("\n\n\t  Jumlah Tagihan anda  : Rp. %2.f", tagihan);
   printf("\n\n\n\t=============================================================");
+
+  konfirmasi_cetak(nama, alamat, golongan, bpm, denda, biaya_per_kubik, tagihan);
 }
 
 void non_niaga_subsidi()
@@ -1083,5 +1154,4 @@ int main(void)
 {
   open();
   menu_golongan();
-  ulang();
 }
