@@ -14,6 +14,7 @@ int pemakaian_bulan_lalu, pemakaian_bulan_ini;
 
 // deklarasi fungsi dan prosedur
 int main();
+void menu_golongan();
 
 void close()
 {
@@ -614,7 +615,7 @@ void rumah_tangga()
     non_niaga_tanpa_subsidi();
     break;
   default:
-    rumah_tangga();
+    menu_golongan();
   }
 }
 
@@ -1041,7 +1042,7 @@ void usaha()
     niaga_besar();
     break;
   default:
-    usaha();
+    menu_golongan();
   }
 }
 
