@@ -68,16 +68,18 @@ void ulang()
 void open()
 {
   printf("\n\t=========================================================");
-  printf("\n\t    Selamat datang..Silahkan isi nama terlebih dahulu!   ");
+  printf("\n\t                      Selamat datang                     ");
+  printf("\n\t         Silahkan isi data diri terlebih dahulu!         ");
   printf("\n\t=========================================================");
+
   printf("\n\tMasukan nama anda  : ");
   fgets(nama_konsumen, 40, stdin);
   nama_konsumen[strcspn(nama_konsumen, "\n")] = '\0';
 
   printf("\n\tMasukan alamat anda  : ");
   fgets(alamat, 50, stdin);
-
   alamat[strcspn(alamat, "\n")] = '\0';
+
   close();
 }
 
@@ -86,11 +88,11 @@ void format(char nama[], char alamat[], char golongan[], float bpm, float denda,
   time_t t = time(NULL);
   struct tm tm = *localtime(&t);
 
-  printf("\n\t=============================================================");
+  printf("\n\t===============================================================");
   printf("\n\t    Toko Xin Fu Tang \n");
-  printf("\n\t-------------------------------------------------------------");
+  printf("\n\t---------------------------------------------------------------");
   printf("\n\t                      BUKTI PEMBAYARAN AIR                   ");
-  printf("\n\t-------------------------------------------------------------\n");
+  printf("\n\t---------------------------------------------------------------\n");
   printf("\n\t  Nama                      : %s", nama);
   printf("\n\t  Alamat                    : %s", alamat);
   printf("\n\t  Tgl Pembayaran            : %d-%02d-%02d %02d:%02d:%02d ", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900, tm.tm_hour, tm.tm_min, tm.tm_sec);
